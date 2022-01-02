@@ -1,0 +1,841 @@
+swagger: "2.0"
+info:
+  title: beego Test API
+  description: beego has a very cool tools to autogenerate documents for your API
+  version: 1.0.0
+  termsOfService: http://beego.me/
+  contact:
+    email: yisu.martin@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /api
+paths:
+  /address/{addressId}:
+    get:
+      tags:
+      - address
+      description: get UserAddress by id
+      operationId: UserAddressController.Get One
+      parameters:
+      - in: path
+        name: id
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.UserAddress'
+        "500":
+          description: :id is empty
+    delete:
+      tags:
+      - address
+      description: delete the UserAddress
+      operationId: UserAddressController.Delete
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "500":
+          description: id is empty
+  /address/add:
+    post:
+      tags:
+      - address
+      description: create UserAddress
+      operationId: UserAddressController.Post
+      parameters:
+      - in: body
+        name: body
+        description: body for UserAddress content
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserAddress'
+      responses:
+        "201":
+          description: '{int} models.UserAddress'
+        "500":
+          description: body is empty
+  /address/pages:
+    get:
+      tags:
+      - address
+      description: get UserAddress
+      operationId: UserAddressController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.UserAddress'
+        "500":
+          description: ""
+  /address/update:
+    put:
+      tags:
+      - address
+      description: update the UserAddress
+      operationId: UserAddressController.Update
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for UserAddress content
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserAddress'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.UserAddress'
+        "500":
+          description: :id is not int
+  /cart/{productId}:
+    put:
+      tags:
+      - cart
+      description: update the Cart
+      operationId: CartController.Put
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for Cart content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Cart'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Cart'
+        "500":
+          description: :id is not int
+    delete:
+      tags:
+      - cart
+      description: delete the Cart
+      operationId: CartController.Delete
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "500":
+          description: id is empty
+  /cart/add:
+    post:
+      tags:
+      - cart
+      description: create Cart
+      operationId: CartController.Post
+      parameters:
+      - in: body
+        name: body
+        description: body for Cart content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Cart'
+      responses:
+        "201":
+          description: '{int} models.Cart'
+        "500":
+          description: body is empty
+  /cart/list:
+    get:
+      tags:
+      - cart
+      description: get Cart
+      operationId: CartController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Cart'
+        "500":
+          description: ""
+  /cart/selectAll:
+    put:
+      tags:
+      - cart
+  /cart/sum:
+    get:
+      tags:
+      - cart
+      description: 查询购物车数量
+      operationId: CartController.Get Count
+      parameters:
+      - in: path
+        name: id
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Cart'
+        "500":
+          description: :id is empty
+  /cart/unSelectAll:
+    put:
+      tags:
+      - cart
+  /order/{orderNo}:
+    get:
+      tags:
+      - order
+      description: get OrderInfo by id
+      operationId: OrderInfoController.Get One
+      parameters:
+      - in: path
+        name: id
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.OrderInfo'
+        "500":
+          description: :id is error
+  /order/create:
+    post:
+      tags:
+      - order
+      description: create OrderInfo
+      operationId: OrderInfoController.create
+      parameters:
+      - in: body
+        name: body
+        description: body for OrderInfo content
+        required: true
+        schema:
+          $ref: '#/definitions/models.OrderInfo'
+      responses:
+        "201":
+          description: '{int} models.OrderInfo'
+        "500":
+          description: body is error
+  /order/pages:
+    get:
+      tags:
+      - order
+      description: get OrderInfo
+      operationId: OrderInfoController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.OrderInfo'
+        "500":
+          description: error
+  /order/pay:
+    post:
+      tags:
+      - order
+      description: update the OrderInfo
+      operationId: OrderInfoController.Pay
+      parameters:
+      - in: body
+        name: body
+        description: body for OrderInfo content
+        required: true
+        schema:
+          $ref: '#/definitions/models.OrderInfo'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.OrderInfo'
+        "500":
+          description: error
+  /product/:
+    post:
+      tags:
+      - product
+      description: create Product
+      operationId: ProductController.Post
+      parameters:
+      - in: body
+        name: body
+        description: body for Product content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      responses:
+        "201":
+          description: '{int} models.Product'
+        "500":
+          description: body is empty
+  /product/{id}:
+    put:
+      tags:
+      - product
+      description: update the Product
+      operationId: ProductController.Put
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for Product content
+        required: true
+        schema:
+          $ref: '#/definitions/models.Product'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Product'
+        "500":
+          description: :id is not int
+  /product/{productId}:
+    get:
+      tags:
+      - product
+      description: get Product by id
+      operationId: ProductController.Get One
+      parameters:
+      - in: path
+        name: id
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Product'
+        "500":
+          description: :id is empty
+  /product/pages:
+    get:
+      tags:
+      - product
+      description: get Product
+      operationId: ProductController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.Product'
+        "500":
+          description: ""
+  /user/:
+    get:
+      tags:
+      - user
+      description: get User
+      operationId: UserController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.User'
+        "500":
+          description: ""
+    post:
+      tags:
+      - user
+      description: create User
+      operationId: UserController.Post
+      parameters:
+      - in: body
+        name: body
+        description: body for User content
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      responses:
+        "201":
+          description: '{int} models.User'
+        "500":
+          description: body is empty
+  /user/{id}:
+    put:
+      tags:
+      - user
+      description: update the User
+      operationId: UserController.Put
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for User content
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.User'
+        "500":
+          description: :id is not int
+    delete:
+      tags:
+      - user
+      description: delete the User
+      operationId: UserController.Delete
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "500":
+          description: id is empty
+  /user/getUser:
+    get:
+      tags:
+      - user
+      description: get currentUser
+      operationId: UserController.GetUser
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "500":
+          description: id is empty
+  /user/login:
+    post:
+      tags:
+      - user
+      description: login
+      operationId: UserController.Get One
+      parameters:
+      - in: body
+        name: body
+        description: body for User content
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.User'
+        "500":
+          description: :id is empty
+  /user/logout:
+    post:
+      tags:
+      - user
+      description: LogOut
+      operationId: UserController.LogOut
+      responses:
+        "200":
+          description: '{string} logout success!'
+        "500":
+          description: id is empty
+definitions:
+  lib.Time:
+    title: Time
+    type: object
+  models.Cart:
+    title: Cart
+    type: object
+    properties:
+      activityId:
+        description: 活动id
+        type: string
+      activityName:
+        description: 活动名称
+        type: string
+      id:
+        description: 主键
+        type: integer
+        format: int64
+      productId:
+        description: 商品id
+        type: string
+      productMainImage:
+        description: 商品图片地址
+        type: string
+      productName:
+        description: 商品名称
+        type: string
+      productSubtitle:
+        description: 商品简要描述
+        type: string
+      productTotalPrice:
+        description: 总价格
+        type: number
+        format: double
+      productUnitPrice:
+        description: 单价
+        type: number
+        format: double
+      quantity:
+        description: 数量
+        type: integer
+        format: int64
+      selected:
+        description: 是否已选择 1是 0 否
+        type: integer
+        format: int32
+      userId:
+        description: 用户id
+        type: integer
+        format: int64
+  models.OrderInfo:
+    title: OrderInfo
+    type: object
+    properties:
+      addressId:
+        description: 地址id
+        type: string
+      area:
+        description: 区
+        type: string
+      city:
+        description: 城市
+        type: string
+      createTime:
+        $ref: '#/definitions/lib.Time'
+        description: 创建时间
+      id:
+        description: 主键
+        type: integer
+        format: int64
+      orderNo:
+        description: 订单编号
+        type: string
+      payment:
+        description: 支付金额
+        type: number
+        format: double
+      paymentTime:
+        $ref: '#/definitions/lib.Time'
+        description: 支付时间
+      paymentType:
+        description: 支付类型
+        type: integer
+        format: int32
+      paymentTypeDesc:
+        description: 支付类型描述
+        type: string
+      postage:
+        description: 邮费
+        type: number
+        format: double
+      postalCode:
+        description: 邮编
+        type: string
+      province:
+        description: 省份
+        type: string
+      receiveName:
+        description: 收货人
+        type: string
+      receivePhone:
+        description: 联系号码
+        type: string
+      status:
+        description: 订单状态
+        type: integer
+        format: int32
+      statusDesc:
+        description: 状态描述
+        type: string
+      street:
+        description: 详细地址
+        type: string
+      userId:
+        description: 购买人id
+        type: integer
+        format: int64
+  models.Product:
+    title: Product
+    type: object
+    properties:
+      activityId:
+        description: 活动id
+        type: string
+      categoryId:
+        description: 品类id
+        type: string
+      createTime:
+        $ref: '#/definitions/lib.Time'
+        description: 创建时间
+      id:
+        description: 主键
+        type: integer
+        format: int64
+      mainImage:
+        description: 商品图片地址
+        type: string
+      name:
+        description: 商品名称
+        type: string
+      price:
+        description: 商品单价
+        type: number
+        format: double
+      productId:
+        description: 商品id
+        type: string
+      status:
+        description: 商品状态
+        type: integer
+        format: int32
+      stock:
+        description: 库存数
+        type: integer
+        format: int64
+      subImages:
+        description: 子图片列表
+        type: string
+      subTitle:
+        description: 简要描述
+        type: string
+  models.User:
+    title: User
+    type: object
+    properties:
+      createTime:
+        $ref: '#/definitions/lib.Time'
+        description: 创建时间
+      email:
+        description: 邮箱
+        type: string
+      id:
+        description: 主键
+        type: integer
+        format: int64
+      phone:
+        description: 手机号
+        type: string
+      status:
+        description: 启用标志
+        type: integer
+        format: int32
+      userName:
+        description: 用户名
+        type: string
+  models.UserAddress:
+    title: UserAddress
+    type: object
+    properties:
+      addressId:
+        description: 地址id
+        type: string
+      addressLabel:
+        description: 地址标签
+        type: integer
+        format: int32
+      area:
+        description: 区
+        type: string
+      areaCode:
+        description: 区编码
+        type: string
+      city:
+        description: 城市
+        type: string
+      cityCode:
+        description: 城市编码
+        type: string
+      defaultFlag:
+        description: 默认标志
+        type: integer
+        format: int32
+      id:
+        description: 主键
+        type: integer
+        format: int64
+      postalCode:
+        description: 邮编
+        type: string
+      province:
+        description: 省份
+        type: string
+      provinceCode:
+        description: 省份编码
+        type: string
+      receiveName:
+        description: 收货人
+        type: string
+      receivePhone:
+        description: 联系号码
+        type: string
+      street:
+        description: 详细地址
+        type: string
+tags:
+- name: cart
+  description: |
+    CartController operations for Cart
+- name: order
+  description: |
+    OrderInfoController operations for OrderInfo
+- name: product
+  description: |
+    ProductController operations for Product
+- name: user
+  description: |
+    UserController operations for User
+- name: address
+  description: |
+    UserAddressController operations for UserAddress
