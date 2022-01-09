@@ -9,7 +9,7 @@ import (
 func init() {
 	log := logs.NewLogger()
 	log.SetLogger(logs.AdapterConsole)
-	log.SetLogger(logs.AdapterMultiFile, `{"filename":"go-BeeGo.log"}`)
+	//log.SetLogger(logs.AdapterMultiFile, `{"filename":"go-BeeGo.log"}`)
 	log.EnableFuncCallDepth(true)
 	//异步输出日志
 	log.Async()
