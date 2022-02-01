@@ -10,7 +10,7 @@ import (
 )
 
 type OrderInfo struct {
-	Id              int      `orm:"column(id);auto" description:"主键" json:"id"`
+	Id              int64    `orm:"column(id);auto" description:"主键" json:"id,string"`
 	CreateTime      lib.Time `orm:"column(create_time);type(datetime);auto_now_add" description:"创建时间" json:"createTime"`
 	UpdateTime      lib.Time `orm:"column(update_time);type(datetime);auto_now" description:"更新时间" json:"-"`
 	CreateUser      int64    `orm:"column(create_user)" description:"创建人" json:"-"`
@@ -24,7 +24,7 @@ type OrderInfo struct {
 	Status          int8     `orm:"column(status)" description:"订单状态" json:"status"`
 	StatusDesc      string   `orm:"column(status_desc);size(20)" description:"状态描述" json:"statusDesc"`
 	PaymentTime     lib.Time `orm:"column(payment_time);type(datetime);null" description:"支付时间" json:"paymentTime"`
-	AddressId       string   `orm:"column(address_id);null" description:"地址id" json:"addressId"`
+	AddressId       int64    `orm:"column(address_id);null" description:"地址id" json:"addressId,string"`
 	ReceiveName     string   `orm:"column(receive_name);size(50);null" description:"收货人" json:"receiveName"`
 	ReceivePhone    string   `orm:"column(receive_phone);size(20);null" description:"联系号码" json:"receivePhone"`
 	Province        string   `orm:"column(province);size(20);null" description:"省份" json:"province"`
@@ -32,7 +32,7 @@ type OrderInfo struct {
 	Area            string   `orm:"column(area);size(20);null" description:"区" json:"area"`
 	Street          string   `orm:"column(street);size(50);null" description:"详细地址" json:"street"`
 	PostalCode      string   `orm:"column(postal_code);size(255);null" description:"邮编" json:"postalCode"`
-	UserId          int64    `orm:"column(user_id)" description:"购买人id" json:"userId"`
+	UserId          int64    `orm:"column(user_id)" description:"购买人id" json:"userId,string"`
 }
 
 //订单发那会列表新对象
@@ -169,7 +169,7 @@ func UpdateOrderInfoById(m *OrderInfo) (err error) {
 
 // DeleteOrderInfo deletes OrderInfo by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteOrderInfo(id int) (err error) {
+func DeleteOrderInfo(id int64) (err error) {
 	o := orm.NewOrm()
 	v := OrderInfo{Id: id}
 	// ascertain id exists in the database

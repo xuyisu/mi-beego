@@ -10,7 +10,7 @@ import (
 )
 
 type OrderDetail struct {
-	Id                int      `orm:"column(id);auto" description:"主键" json:"id"`
+	Id                int64    `orm:"column(id);auto" description:"主键" json:"id,string"`
 	CreateTime        lib.Time `orm:"column(create_time);type(datetime);auto_now_add" description:"创建时间" json:"createTime"`
 	UpdateTime        lib.Time `orm:"column(update_time);type(datetime);auto_now" description:"更新时间" json:"-"`
 	CreateUser        int64    `orm:"column(create_user)" description:"创建人" json:"-"`
@@ -18,16 +18,16 @@ type OrderDetail struct {
 	DeleteFlag        int8     `orm:"column(delete_flag)" description:"删除标志" json:"-"`
 	OrderNo           string   `orm:"column(order_no);size(60)" description:"订单编号" json:"orderNo"`
 	OrderDetailNo     string   `orm:"column(order_detail_no);size(60)" description:"订单明细编号" json:"orderDetailNo"`
-	ActivityId        string   `orm:"column(activity_id);null" description:"活动id" json:"activityId"`
+	ActivityId        int64    `orm:"column(activity_id);null" description:"活动id" json:"activityId,string"`
 	ActivityName      string   `orm:"column(activity_name);size(50);null" description:"活动名称" json:"activityName"`
 	ActivityMainImage string   `orm:"column(activity_main_image);size(100);null" description:"活动图片地址" json:"activityMainImage"`
-	ProductId         string   `orm:"column(product_id)" description:"商品id" json:"productId"`
+	ProductId         int64    `orm:"column(product_id)" description:"商品id" json:"productId,string"`
 	ProductName       string   `orm:"column(product_name);size(50)" description:"商品名称" json:"productName"`
 	ProductMainImage  string   `orm:"column(product_main_image);size(100)" description:"商品图片地址" json:"productMainImage"`
 	CurrentUnitPrice  float64  `orm:"column(current_unit_price);null;digits(20);decimals(2)" description:"单价" json:"currentUnitPrice"`
 	Quantity          int      `orm:"column(quantity);null" description:"数量" json:"quantity"`
 	TotalPrice        float64  `orm:"column(total_price);null;digits(20);decimals(2)" description:"总价" json:"totalPrice"`
-	UserId            int64    `orm:"column(user_id)" description:"购买人id" json:"userId"`
+	UserId            int64    `orm:"column(user_id)" description:"购买人id" json:"userId,string"`
 	Status            int8     `orm:"column(status)" description:"订单状态" json:"status"`
 	StatusDesc        string   `orm:"column(status_desc);size(20);null" description:"状态描述" json:"statusDesc"`
 	CancelTime        lib.Time `orm:"column(cancel_time);type(datetime);null" description:"取消时间" json:"cancelTime"`
@@ -54,7 +54,7 @@ func AddOrderDetail(m *OrderDetail) (id int64, err error) {
 
 // GetOrderDetailById retrieves OrderDetail by Id. Returns error if
 // Id doesn't exist
-func GetOrderDetailById(id int) (v *OrderDetail, err error) {
+func GetOrderDetailById(id int64) (v *OrderDetail, err error) {
 	o := orm.NewOrm()
 	v = &OrderDetail{Id: id}
 	if err = o.Read(v); err == nil {
@@ -158,7 +158,7 @@ func UpdateOrderDetailById(m *OrderDetail) (err error) {
 
 // DeleteOrderDetail deletes OrderDetail by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteOrderDetail(id int) (err error) {
+func DeleteOrderDetail(id int64) (err error) {
 	o := orm.NewOrm()
 	v := OrderDetail{Id: id}
 	// ascertain id exists in the database

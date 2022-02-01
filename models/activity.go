@@ -13,13 +13,13 @@ import (
 )
 
 type Activity struct {
-	Id         int      `orm:"column(id);auto" description:"主键"`
+	Id         int64    `orm:"column(id);auto" description:"主键"`
 	CreateTime lib.Time `orm:"column(create_time);type(datetime);auto_now" description:"创建时间"`
 	UpdateTime lib.Time `orm:"column(update_time);type(datetime);auto_now" description:"更新时间"`
 	CreateUser int64    `orm:"column(create_user)" description:"创建人"`
 	UpdateUser int64    `orm:"column(update_user)" description:"更新人"`
 	DeleteFlag int8     `orm:"column(delete_flag)" description:"删除标志"`
-	ActivityId string   `orm:"column(activity_id)" description:"活动id"`
+	ActivityId int64    `orm:"column(activity_id)" description:"活动id"`
 	Name       string   `orm:"column(name);size(60);null" description:"活动名称"`
 	Status     int8     `orm:"column(status)" description:"活动状态"`
 	MainImage  string   `orm:"column(main_image);size(100);null" description:"活动图片地址"`
@@ -45,7 +45,7 @@ func AddActivity(m *Activity) (id int64, err error) {
 
 // GetActivityById retrieves Activity by Id. Returns error if
 // Id doesn't exist
-func GetActivityById(id int) (v *Activity, err error) {
+func GetActivityById(id int64) (v *Activity, err error) {
 	o := orm.NewOrm()
 	v = &Activity{Id: id}
 	if err = o.Read(v); err == nil {
@@ -163,7 +163,7 @@ func UpdateActivityById(m *Activity) (err error) {
 
 // DeleteActivity deletes Activity by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteActivity(id int) (err error) {
+func DeleteActivity(id int64) (err error) {
 	o := orm.NewOrm()
 	v := Activity{Id: id}
 	// ascertain id exists in the database

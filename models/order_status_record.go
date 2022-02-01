@@ -10,11 +10,11 @@ import (
 )
 
 type OrderStatusRecord struct {
-	Id            int      `orm:"column(id);auto" description:"主键"`
+	Id            int64    `orm:"column(id);auto" description:"主键"`
 	CreateTime    lib.Time `orm:"column(create_time);type(datetime)" description:"创建时间"`
 	OrderNo       string   `orm:"column(order_no);size(60)" description:"订单编号"`
 	OrderDetailNo string   `orm:"column(order_detail_no);size(60)" description:"订单明细编号"`
-	ProductId     string   `orm:"column(product_id)" description:"商品id"`
+	ProductId     int64    `orm:"column(product_id)" description:"商品id"`
 	ProductName   string   `orm:"column(product_name);size(60);null" description:"商品名称"`
 	Status        int8     `orm:"column(status)" description:"订单状态"`
 	StatusDesc    string   `orm:"column(status_desc);size(60);null" description:"状态描述"`
@@ -38,7 +38,7 @@ func AddOrderStatusRecord(m *OrderStatusRecord) (id int64, err error) {
 
 // GetOrderStatusRecordById retrieves OrderStatusRecord by Id. Returns error if
 // Id doesn't exist
-func GetOrderStatusRecordById(id int) (v *OrderStatusRecord, err error) {
+func GetOrderStatusRecordById(id int64) (v *OrderStatusRecord, err error) {
 	o := orm.NewOrm()
 	v = &OrderStatusRecord{Id: id}
 	if err = o.Read(v); err == nil {
@@ -142,7 +142,7 @@ func UpdateOrderStatusRecordById(m *OrderStatusRecord) (err error) {
 
 // DeleteOrderStatusRecord deletes OrderStatusRecord by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteOrderStatusRecord(id int) (err error) {
+func DeleteOrderStatusRecord(id int64) (err error) {
 	o := orm.NewOrm()
 	v := OrderStatusRecord{Id: id}
 	// ascertain id exists in the database

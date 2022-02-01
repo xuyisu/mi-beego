@@ -40,7 +40,7 @@ func (c *UserAddressController) Add() {
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		//当你分布式的部署你的服务的时候，这个NewWorker的参数记录不同的node配置的值应该不一样
 		worker, _ := utils2.NewWorker(1)
-		v.AddressId = strconv.FormatInt(worker.GetId(), 10)
+		v.AddressId = worker.GetId()
 		v.UpdateTime = lib.Time{Time: time.Now()}
 		v.UpdateUser = loginUser.Id
 		v.CreateTime = lib.Time{Time: time.Now()}
@@ -67,8 +67,8 @@ func (c *UserAddressController) Add() {
 // @router /:addressId [get]
 func (c *UserAddressController) GetOne() {
 	idStr := c.Ctx.Input.Param(":addressId")
-	//addrId, _ := strconv.ParseInt(idStr, 10, 64)
-	v, err := models.GetUserAddressByAddrId(idStr)
+	addrId, _ := strconv.ParseInt(idStr, 10, 64)
+	v, err := models.GetUserAddressByAddrId(addrId)
 	if err != nil {
 		logs.Error("查询失败:%v,req=%v", err.Error(), idStr)
 		c.Data["json"] = lib.Err()
@@ -182,8 +182,8 @@ func (c *UserAddressController) Update() {
 // @router /:addressId [delete]
 func (c *UserAddressController) Delete() {
 	idStr := c.Ctx.Input.Param(":addressId")
-	//addressId, _ := strconv.ParseInt(idStr, 10, 64)
-	v, err := models.GetUserAddressByAddrId(idStr)
+	addressId, _ := strconv.ParseInt(idStr, 10, 64)
+	v, err := models.GetUserAddressByAddrId(addressId)
 	if err != nil {
 		logs.Error("查询失败:%v,req=%v", err.Error(), idStr)
 		c.Data["json"] = lib.ErrMsg("无权限删除")

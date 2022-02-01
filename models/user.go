@@ -10,7 +10,7 @@ import (
 )
 
 type User struct {
-	Id         int64    `orm:"column(id);auto" description:"主键" json:"id"`
+	Id         int64    `orm:"column(id);auto" description:"主键" json:"id,string"`
 	CreateTime lib.Time `orm:"column(create_time);type(datetime);auto_now" description:"创建时间" json:"createTime"`
 	UpdateTime lib.Time `orm:"column(update_time);type(datetime);auto_now" description:"更新时间" json:"-"`
 	CreateUser int64    `orm:"column(create_user)" description:"创建人" json:"-"`

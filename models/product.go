@@ -10,19 +10,19 @@ import (
 )
 
 type Product struct {
-	Id         int      `orm:"column(id);auto" description:"主键" json:"id"`
+	Id         int64    `orm:"column(id);auto" description:"主键" json:"id,string"`
 	CreateTime lib.Time `orm:"column(create_time);type(datetime);auto_now" description:"创建时间" json:"createTime"`
 	UpdateTime lib.Time `orm:"column(update_time);type(datetime);auto_now" description:"更新时间" json:"-"`
 	CreateUser string   `orm:"column(create_user)" description:"创建人" json:"-"`
 	UpdateUser string   `orm:"column(update_user)" description:"更新人" json:"-"`
 	DeleteFlag int8     `orm:"column(delete_flag)" description:"删除标志" json:"-"`
-	ProductId  string   `orm:"column(product_id);null" description:"商品id" json:"productId"`
-	CategoryId string   `orm:"column(category_id);null" description:"品类id" json:"categoryId"`
+	ProductId  int64    `orm:"column(product_id);null" description:"商品id" json:"productId,string"`
+	CategoryId int64    `orm:"column(category_id);null" description:"品类id" json:"categoryId,string"`
 	Name       string   `orm:"column(name);size(60);null" description:"商品名称" json:"name"`
 	SubTitle   string   `orm:"column(sub_title);size(100);null" description:"简要描述" json:"subTitle"`
 	MainImage  string   `orm:"column(main_image);size(100);null" description:"商品图片地址" json:"mainImage"`
 	SubImages  string   `orm:"column(sub_images);size(100);null" description:"子图片列表" json:"subImages"`
-	ActivityId string   `orm:"column(activity_id);null" description:"活动id" json:"activityId"`
+	ActivityId int64    `orm:"column(activity_id);null" description:"活动id" json:"activityId,string"`
 	Status     int8     `orm:"column(status)" description:"商品状态" json:"status"`
 	Price      float64  `orm:"column(price);digits(20);decimals(2)" description:"商品单价" json:"price"`
 	Stock      int      `orm:"column(stock)" description:"库存数" json:"stock"`
@@ -46,7 +46,7 @@ func AddProduct(m *Product) (id int64, err error) {
 
 // GetProductById retrieves Product by Id. Returns error if
 // Id doesn't exist
-func GetProductById(id int) (v *Product, err error) {
+func GetProductById(id int64) (v *Product, err error) {
 	o := orm.NewOrm()
 	v = &Product{Id: id}
 	if err = o.Read(v); err == nil {
@@ -57,7 +57,7 @@ func GetProductById(id int) (v *Product, err error) {
 
 // GetProductById retrieves Product by Id. Returns error if
 // Id doesn't exist
-func GetProductByProductId(productId string) (v *Product, err error) {
+func GetProductByProductId(productId int64) (v *Product, err error) {
 	o := orm.NewOrm()
 	v = &Product{ProductId: productId, Status: 1, DeleteFlag: 0}
 	if err = o.Read(v, "productId", "status", "deleteFlag"); err == nil {
@@ -161,7 +161,7 @@ func UpdateProductById(m *Product) (err error) {
 
 // DeleteProduct deletes Product by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteProduct(id int) (err error) {
+func DeleteProduct(id int64) (err error) {
 	o := orm.NewOrm()
 	v := Product{Id: id}
 	// ascertain id exists in the database

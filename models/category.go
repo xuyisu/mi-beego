@@ -10,7 +10,7 @@ import (
 )
 
 type Category struct {
-	Id         int      `orm:"column(id);auto" description:"主键"`
+	Id         int64    `orm:"column(id);auto" description:"主键"`
 	CreateTime lib.Time `orm:"column(create_time);type(datetime);auto_now" description:"创建时间"`
 	UpdateTime lib.Time `orm:"column(update_time);type(datetime);auto_now" description:"更新时间"`
 	CreateUser int64    `orm:"column(create_user)" description:"创建人"`
@@ -40,7 +40,7 @@ func AddCategory(m *Category) (id int64, err error) {
 
 // GetCategoryById retrieves Category by Id. Returns error if
 // Id doesn't exist
-func GetCategoryById(id int) (v *Category, err error) {
+func GetCategoryById(id int64) (v *Category, err error) {
 	o := orm.NewOrm()
 	v = &Category{Id: id}
 	if err = o.Read(v); err == nil {
@@ -144,7 +144,7 @@ func UpdateCategoryById(m *Category) (err error) {
 
 // DeleteCategory deletes Category by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteCategory(id int) (err error) {
+func DeleteCategory(id int64) (err error) {
 	o := orm.NewOrm()
 	v := Category{Id: id}
 	// ascertain id exists in the database

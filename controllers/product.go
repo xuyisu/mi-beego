@@ -53,8 +53,8 @@ func (c *ProductController) Post() {
 // @router /:productId [get]
 func (c *ProductController) GetOne() {
 	idStr := c.Ctx.Input.Param(":productId")
-	//productId, _ := strconv.ParseInt(idStr, 10, 64)
-	v, err := models.GetProductByProductId(idStr)
+	productId, _ := strconv.ParseInt(idStr, 10, 64)
+	v, err := models.GetProductByProductId(productId)
 	if err != nil {
 		c.Data["json"] = lib.Err()
 	} else {
@@ -139,7 +139,7 @@ func (c *ProductController) Pages() {
 // @router /:id [put]
 func (c *ProductController) Put() {
 	idStr := c.Ctx.Input.Param(":id")
-	id, _ := strconv.Atoi(idStr)
+	id, _ := strconv.ParseInt(idStr, 10, 64)
 	v := models.Product{Id: id}
 	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &v); err == nil {
 		if err := models.UpdateProductById(&v); err == nil {

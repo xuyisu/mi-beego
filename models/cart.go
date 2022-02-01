@@ -11,16 +11,16 @@ import (
 )
 
 type Cart struct {
-	Id                int      `orm:"column(id);auto" description:"主键" json:"id"`
+	Id                int64    `orm:"column(id);auto" description:"主键" json:"id,string"`
 	CreateTime        lib.Time `orm:"column(create_time);type(datetime);auto_now_add" description:"创建时间" json:"-"`
 	UpdateTime        lib.Time `orm:"column(update_time);type(datetime);auto_now" description:"更新时间" json:"-"`
 	CreateUser        int64    `orm:"column(create_user)" description:"创建人" json:"-"`
 	UpdateUser        int64    `orm:"column(update_user)" description:"更新人" json:"-"`
 	DeleteFlag        int8     `orm:"column(delete_flag)" description:"删除标志" json:"-"`
-	UserId            int64    `orm:"column(user_id);null" description:"用户id" json:"userId"`
-	ActivityId        string   `orm:"column(activity_id);null" description:"活动id" json:"activityId"`
+	UserId            int64    `orm:"column(user_id);null" description:"用户id" json:"userId,string"`
+	ActivityId        int64    `orm:"column(activity_id);null" description:"活动id" json:"activityId,string"`
 	ActivityName      string   `orm:"column(activity_name);size(255);null" description:"活动名称" json:"activityName"`
-	ProductId         string   `orm:"column(product_id)" description:"商品id" json:"productId"`
+	ProductId         int64    `orm:"column(product_id)" description:"商品id" json:"productId,string"`
 	ProductName       string   `orm:"column(product_name);size(255)" description:"商品名称" json:"productName"`
 	ProductSubtitle   string   `orm:"column(product_subtitle);size(255);null" description:"商品简要描述" json:"productSubtitle"`
 	ProductMainImage  string   `orm:"column(product_main_image);size(255);null" description:"商品图片地址" json:"productMainImage"`
@@ -81,7 +81,7 @@ func GetCartCount() (count int64, err error) {
 
 // GetCartById retrieves Cart by Id. Returns error if
 // Id doesn't exist
-func GetCartByProductId(productId string) (v *Cart, err error) {
+func GetCartByProductId(productId int64) (v *Cart, err error) {
 	o := orm.NewOrm()
 	v = &Cart{ProductId: productId, DeleteFlag: lib.Zero}
 	if err = o.Read(v, "productId", "deleteFlag"); err == nil {
@@ -186,7 +186,7 @@ func UpdateCartById(m *Cart) (err error) {
 
 // DeleteCart deletes Cart by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteCart(id int) (err error) {
+func DeleteCart(id int64) (err error) {
 	o := orm.NewOrm()
 	v := Cart{Id: id}
 	// ascertain id exists in the database

@@ -10,8 +10,8 @@ import (
 )
 
 type UserAddress struct {
-	Id           int      `orm:"column(id);auto" description:"主键" json:"id"`
-	AddressId    string   `orm:"column(address_id)" description:"地址id" json:"addressId"`
+	Id           int64    `orm:"column(id);auto" description:"主键" json:"id,string"`
+	AddressId    int64    `orm:"column(address_id)" description:"地址id" json:"addressId,string"`
 	CreateTime   lib.Time `orm:"column(create_time);type(datetime);auto_now" description:"创建时间" json:"-"`
 	UpdateTime   lib.Time `orm:"column(update_time);type(datetime);auto_now" description:"更新时间" json:"-"`
 	CreateUser   int64    `orm:"column(create_user)" description:"创建人" json:"-"`
@@ -49,7 +49,7 @@ func AddUserAddress(m *UserAddress) (id int64, err error) {
 
 // GetUserAddressById retrieves UserAddress by Id. Returns error if
 // Id doesn't exist
-func GetUserAddressById(id int) (v *UserAddress, err error) {
+func GetUserAddressById(id int64) (v *UserAddress, err error) {
 	o := orm.NewOrm()
 	v = &UserAddress{Id: id}
 	if err = o.Read(v); err == nil {
@@ -60,7 +60,7 @@ func GetUserAddressById(id int) (v *UserAddress, err error) {
 
 // GetUserAddressByAddrId retrieves UserAddress by Id. Returns error if
 // Id doesn't exist
-func GetUserAddressByAddrId(addrId string) (v *UserAddress, err error) {
+func GetUserAddressByAddrId(addrId int64) (v *UserAddress, err error) {
 	o := orm.NewOrm()
 	v = &UserAddress{AddressId: addrId}
 	if err = o.Read(v, "AddressId"); err == nil {
@@ -165,7 +165,7 @@ func UpdateUserAddressById(m *UserAddress) (err error) {
 
 // DeleteUserAddress deletes UserAddress by Id and returns error if
 // the record to be deleted doesn't exist
-func DeleteUserAddress(id int) (err error) {
+func DeleteUserAddress(id int64) (err error) {
 	o := orm.NewOrm()
 	v := UserAddress{Id: id}
 	// ascertain id exists in the database

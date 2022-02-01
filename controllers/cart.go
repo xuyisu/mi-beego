@@ -253,8 +253,8 @@ func (c *CartController) List() {
 // @router /:productId [put]
 func (c *CartController) Put() {
 	idStr := c.Ctx.Input.Param(":productId")
-	//id, _ := strconv.ParseInt(idStr, 10, 64)
-	product, _ := models.GetProductByProductId(idStr)
+	id, _ := strconv.ParseInt(idStr, 10, 64)
+	product, _ := models.GetProductByProductId(id)
 	if product == nil {
 		c.Data["json"] = lib.ErrMsg("当前商品已下架或删除")
 	}
