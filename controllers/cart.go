@@ -70,7 +70,7 @@ func (c *CartController) Add() {
 			v.UserId = loginUser.Id
 			v.UpdateUser = loginUser.Id
 			if _, err := models.AddCart(&v); err == nil {
-				count, _ := models.GetCartCount()
+				count, _ := models.GetCartCount(loginUser.Id)
 				c.Data["json"] = lib.OkData(count)
 				begin.Commit()
 			} else {
@@ -87,7 +87,7 @@ func (c *CartController) Add() {
 			cart.ProductTotalPrice = totalPrice.Mul(productPrice).InexactFloat64()
 			if err = models.UpdateCartById(cart); err == nil {
 				begin.Commit()
-				count, _ := models.GetCartCount()
+				count, _ := models.GetCartCount(loginUser.Id)
 				c.Data["json"] = lib.OkData(count)
 			} else {
 				logs.Error(err)
@@ -111,7 +111,8 @@ func (c *CartController) Add() {
 // @Failure 500 :id is empty
 // @router /sum [get]
 func (c *CartController) GetCount() {
-	v, err := models.GetCartCount()
+	loginUser := GetLoginUser(*c.Ctx)
+	v, err := models.GetCartCount(loginUser.Id)
 	if err != nil {
 		c.Data["json"] = lib.ErrMsg("查询失败")
 	} else {

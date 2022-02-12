@@ -69,10 +69,10 @@ func AddCart(m *Cart) (id int64, err error) {
 
 // GetCartById retrieves Cart by Id. Returns error if
 // Id doesn't exist
-func GetCartCount() (count int64, err error) {
+func GetCartCount(userId int64) (count int64, err error) {
 	o := orm.NewOrm()
 	qs := o.QueryTable(new(Cart))
-	count, err = qs.Filter("delete_flag", 0).Filter("user_id", 0).Count()
+	count, err = qs.Filter("delete_flag", 0).Filter("user_id", userId).Count()
 	if err != nil {
 		logs.Error(err.Error())
 	}
