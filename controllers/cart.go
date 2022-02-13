@@ -134,7 +134,7 @@ func (c *CartController) SelectAll() {
 			if v.Selected == lib.Zero {
 				v.Selected = lib.One
 				v.UpdateTime = lib.Time{Time: time.Now()}
-				v.UpdateUser = lib.Zero
+				v.UpdateUser = loginUser.Id
 			}
 			models.UpdateCartById(&v)
 		}
