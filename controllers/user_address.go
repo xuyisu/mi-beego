@@ -48,11 +48,11 @@ func (c *UserAddressController) Add() {
 		if _, err := models.AddUserAddress(&v); err == nil {
 			c.Data["json"] = lib.OkData(v)
 		} else {
-			logs.Error("查询失败:%v,req=%v", err.Error(), v)
+			logs.Error("新增失败:%v,req=%v", err.Error(), v)
 			c.Data["json"] = lib.Err()
 		}
 	} else {
-		logs.Error("查询失败:%v,req=%v", err.Error(), v)
+		logs.Error("新增失败:%v,req=%v", err.Error(), v)
 		c.Data["json"] = lib.Err()
 	}
 	c.ServeJSON()
